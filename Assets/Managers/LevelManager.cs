@@ -34,8 +34,8 @@ public class LevelManager : MonoBehaviour {
 		block.localScale = prefabScale;
 		blocks.Add (block);
 	}
-				
-	private void GameStart() {
+
+	public void Load() {
 		// load level data
 		grid = new Blocks[Width, Height];
 		for (int y=0; y<Height; y++) {
@@ -50,13 +50,16 @@ public class LevelManager : MonoBehaviour {
 		// generate blocks
 		for (int y=0; y<Height; y++) {
 			for (int x=0; x<Width; x++) {
-				AddBlock (Blocks.Floor, new Vector3(x, y, 0));
+				AddBlock (Blocks.Floor, new Vector3(x, 0, y));
 				// if grid cell isn't floor, add wall block
 				if (grid[x,y] != Blocks.Floor) {
-					AddBlock (grid[x,y], new Vector3(x, y, 1));
+					AddBlock (grid[x,y], new Vector3(x, 1, y));
 				}
 			}
 		}
+	}
+	
+	private void GameStart() {
 		
 	}
 	

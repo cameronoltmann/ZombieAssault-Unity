@@ -11,10 +11,26 @@ Platform assembly: C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed
 Loading C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.050 seconds
+- Completed reload, in  0.060 seconds
 desktop: 1920x1080 60Hz; virtual: 4080x1920 at -1080,0
 <RI> Initializing input.
 <RI> Input initialized.
+Skipped rendering frame because GfxDevice is in invalid state (device lost)
+ 
+(Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/Misc/Player.cpp Line: 1336)
+
+HandleD3DDeviceLost
+  HandleD3DDeviceLost: still lost
+Skipped rendering frame because GfxDevice is in invalid state (device lost)
+ 
+(Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/Misc/Player.cpp Line: 1336)
+
+HandleD3DDeviceLost
+  HandleD3DDeviceLost: needs reset, doing it
+FullResetD3DDevice
+ResetD3DDevice
+dev->Reset
+D3Dwindow device not lost anymore
 OMG
 Level (UnityEngine.Transform)
 OMG
