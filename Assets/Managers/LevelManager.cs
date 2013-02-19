@@ -1,17 +1,20 @@
 using UnityEngine;
-using System;
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
 
 	public List<Transform> blocks;
-	public Material[] actorPrefabs;
+	public List<Transform> actors;
+	public Transform[] actorPrefabs;
 	public Transform[] blockPrefabs;
 	public enum Blocks { Floor=0, Wall };
+	public enum Actors { Actor=0, Soldier, Civilian, Zombie, Corpse };
 	public int Height;
 	public int Width;
-
+	public int NumActors;
+	
 	protected Blocks[,] grid;
 	
 	// Use this for initialization
@@ -24,6 +27,16 @@ public class LevelManager : MonoBehaviour {
 	void Update () {
 	}
 
+	void AddToLevel(Transform prefab, Vector3 loc, List<Transform> objects) {
+		Vector3 prefabPos = prefab.localPosition;
+		Vector3 prefabScale = prefab.localScale;
+		Transform obj = (Transform)Instantiate (prefab);
+		obj.parent = transform;
+		obj.localPosition = prefabPos + loc;
+		obj.localScale = prefabScale;
+		objects.Add (obj);
+	}
+	
 	private void AddBlock(Blocks b, Vector3 loc) {
 		Transform prefab = blockPrefabs[(int)b];
 		Vector3 prefabPos = prefab.localPosition;
@@ -34,7 +47,12 @@ public class LevelManager : MonoBehaviour {
 		block.localScale = prefabScale;
 		blocks.Add (block);
 	}
-
+	
+	private void AddActor(Actors a, Vector3 loc) {
+		Transform prefab = actorPrefabs[(int)a];
+		AddToLevel (prefab, loc, actors);
+	}
+		
 	public void Load() {
 		// load level data
 		grid = new Blocks[Width, Height];
@@ -57,6 +75,12 @@ public class LevelManager : MonoBehaviour {
 				}
 			}
 		}
+		// add actors
+		for (int i=0; i<NumActors; i++) {
+			float x = Random.value*(Width-3)+1.5f;
+			float y = Random.value*(Width-3)+1.5f;
+			AddActor(Actors.Civilian, new Vector3(x, 1.5f, y));
+		}
 	}
 	
 	private void GameStart() {
@@ -64,10 +88,6 @@ public class LevelManager : MonoBehaviour {
 	}
 	
 	private void GameOver() {
-		Component[] allChildren = GetComponentsInChildren(typeof(Transform));
-		foreach (Transform child in allChildren) {
-			Console.WriteLine ("OMG");
-			Console.WriteLine (child.ToString ());
-		}
+		//Component[] allChildren = GetComponentsInChildren(typeof(Transform));
 	}
 }

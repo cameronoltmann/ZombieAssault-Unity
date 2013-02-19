@@ -6,31 +6,42 @@ public class Actor : MonoBehaviour {
 	public float acceleration;
 	public float direction;
 	public Vector3 move;
+	public float maxSpeed;
+	public Strategy strategy;
+	public float consistency;
+	public float thinkInterval;
+
+	protected float nextThink;
+	
+	protected virtual void SetStrategy() {
+		strategy = GameObject.Find ("/AI").GetComponent<Strategy>();
+	}
 	
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		direction = Random.value*2*Mathf.PI;
-		SetMove (direction, acceleration);
+		SetMove (direction, (float)(Random.value*.5+.25)*acceleration);
+		SetStrategy();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (Time.time >= nextThink) {
+			strategy.Think(this);
+			nextThink += thinkInterval;
+		}
 	}
 	
-	void SetMove(float dir, float magnitude) {
+	public void SetMove(float dir, float magnitude) {
 		float x = Mathf.Cos(dir)*magnitude;
 		float z = Mathf.Sin(dir)*magnitude;
 		move = new Vector3(x, 0, z);
 	}
 		
 	void FixedUpdate () {
-		//if (Random.value>.99) {
-		if (Random.value>.992){
-			direction = Random.value*2*Mathf.PI;
-			SetMove (direction, acceleration);
+		if (rigidbody.velocity.magnitude < maxSpeed) {
+			rigidbody.AddForce(move, ForceMode.Acceleration);
 		}
-		//rigidbody.AddForce (acceleration, 0f, 0f, ForceMode.Acceleration);
-		rigidbody.AddForce(move, ForceMode.Acceleration);
 	}
 	
 

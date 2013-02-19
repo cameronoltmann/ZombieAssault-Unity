@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Game : MonoBehaviour {
 
 	public LevelManager Level;
+	public List<Strategy> Strategies;
 	
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,7 @@ public class Game : MonoBehaviour {
 		GameEventManager.GameOver += GameOver;
 		enabled = false;
 		Time.timeScale = 0f;
+		Level.Load();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +25,6 @@ public class Game : MonoBehaviour {
 	}
 
 	public void StartGame() {
-		Level.Load();
 		GameEventManager.TriggerGameStart();
 	}
 	

@@ -8,14 +8,12 @@ public class GUIManager : MonoBehaviour {
 	void Start () {
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetButtonDown ("Jump")) {
 			TheGame.StartGame();
-			//GameEventManager.TriggerGameStart ();
 		} else if (Input.GetKeyDown (KeyCode.Escape)) {
 			Application.Quit ();
 		}
