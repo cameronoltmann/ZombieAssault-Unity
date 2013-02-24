@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour {
 	public int Height;
 	public int Width;
 	public int NumActors;
+	public static GameObject TerrainParent;
 	
 	protected Blocks[,] grid;
 	
@@ -27,18 +28,21 @@ public class LevelManager : MonoBehaviour {
 	void Update () {
 	}
 
-	void AddToLevel(Transform prefab, Vector3 loc, List<Transform> objects) {
+	void AddToLevel(Transform prefab, Vector3 loc, List<Transform> objects, GameObject parent) {
 		Vector3 prefabPos = prefab.localPosition;
 		Vector3 prefabScale = prefab.localScale;
 		Transform obj = (Transform)Instantiate (prefab);
-		obj.parent = transform;
+		obj.parent = parent.transform;
 		obj.localPosition = prefabPos + loc;
 		obj.localScale = prefabScale;
+		obj.gameObject.layer = parent.layer;
 		objects.Add (obj);
 	}
 	
 	private void AddBlock(Blocks b, Vector3 loc) {
 		Transform prefab = blockPrefabs[(int)b];
+		AddToLevel (prefab, loc, blocks, TerrainParent);
+		/*
 		Vector3 prefabPos = prefab.localPosition;
 		Vector3 prefabScale = prefab.localScale;
 		Transform block = (Transform)Instantiate (prefab);
@@ -46,11 +50,30 @@ public class LevelManager : MonoBehaviour {
 		block.localPosition = prefabPos + loc;
 		block.localScale = prefabScale;
 		blocks.Add (block);
+		*/
 	}
 	
 	private void AddActor(Actors a, Vector3 loc) {
 		Transform prefab = actorPrefabs[(int)a];
-		AddToLevel (prefab, loc, actors);
+		GameObject parent = null;
+		switch (a) {
+		case Actors.Actor:
+			parent = Actor.ObjectParent;
+			break;
+		case Actors.Civilian:
+			parent = Civilian.ObjectParent;
+			break;
+		case Actors.Soldier:
+			parent = Civilian.ObjectParent;
+			break;
+		case Actors.Zombie:
+			parent = Civilian.ObjectParent;
+			break;
+		case Actors.Corpse:
+			parent = Civilian.ObjectParent;
+			break;
+		}
+		AddToLevel (prefab, loc, actors, parent);
 	}
 		
 	public void Load() {
@@ -77,8 +100,13 @@ public class LevelManager : MonoBehaviour {
 		}
 		// add actors
 		for (int i=0; i<NumActors; i++) {
-			float x = Random.value*(Width-3)+1.5f;
-			float y = Random.value*(Width-3)+1.5f;
+			bool bad = true;
+			float x=0, y=0;
+			while (bad) {
+				x = Random.value*(Width-3)+1.5f;
+				y = Random.value*(Width-3)+1.5f;
+				bad = Physics.CheckSphere (new Vector3(x, 1.5f, y), .2f);
+			}
 			AddActor(Actors.Civilian, new Vector3(x, 1.5f, y));
 		}
 	}

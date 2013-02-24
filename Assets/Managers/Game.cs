@@ -12,6 +12,8 @@ public class Game : MonoBehaviour {
 	void Start () {
 		GameEventManager.GameStart += GameStart;
 		GameEventManager.GameOver += GameOver;
+		SetActorHierarchy();
+		//ObjectParent = GameObject.Find (actorCategory);
 		enabled = false;
 		Time.timeScale = 0f;
 		Level.Load();
@@ -36,5 +38,11 @@ public class Game : MonoBehaviour {
 	private void GameOver() {
 		enabled = false;
 		Time.timeScale = 0f;
+	}
+	
+	private void SetActorHierarchy() {
+		LevelManager.TerrainParent = GameObject.Find ("Terrain");
+		Actor.ObjectParent = GameObject.Find ("Actors");
+		Civilian.ObjectParent = GameObject.Find ("Neutrals");
 	}
 }

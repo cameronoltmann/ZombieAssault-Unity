@@ -7,10 +7,12 @@ public class Actor : MonoBehaviour {
 	public float direction;
 	public Vector3 move;
 	public float maxSpeed;
+	public float targetSpeed;
 	public Strategy strategy;
 	public float consistency;
 	public float thinkInterval;
-
+	public static GameObject ObjectParent;
+	
 	protected float nextThink;
 	
 	protected virtual void SetStrategy() {
@@ -20,7 +22,7 @@ public class Actor : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
 		direction = Random.value*2*Mathf.PI;
-		SetMove (direction, (float)(Random.value*.5+.25)*acceleration);
+		SetMove (direction, (float)(Random.value*.5+.25));
 		SetStrategy();
 	}
 	
@@ -33,13 +35,14 @@ public class Actor : MonoBehaviour {
 	}
 	
 	public void SetMove(float dir, float magnitude) {
-		float x = Mathf.Cos(dir)*magnitude;
-		float z = Mathf.Sin(dir)*magnitude;
+		targetSpeed = magnitude*maxSpeed;
+		float x = Mathf.Cos(dir)*acceleration;
+		float z = Mathf.Sin(dir)*acceleration;
 		move = new Vector3(x, 0, z);
 	}
 		
 	void FixedUpdate () {
-		if (rigidbody.velocity.magnitude < maxSpeed) {
+		if (rigidbody.velocity.magnitude < targetSpeed) {
 			rigidbody.AddForce(move, ForceMode.Acceleration);
 		}
 	}
