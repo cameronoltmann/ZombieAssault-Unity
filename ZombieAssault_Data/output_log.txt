@@ -1,7 +1,7 @@
 Initialize engine version: 4.0.1f2
 GfxDevice: creating device client; threaded=1
 Direct3D:
-    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.697]
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.1407]
     Renderer: NVIDIA GeForce GTX 590
     Vendor:   NVIDIA
     VRAM:     1488 MB (via DXGI)
@@ -11,7 +11,7 @@ Platform assembly: C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed
 Loading C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Dropbox\Dev\Unity\ZombieAssault\ZombieAssault_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.049 seconds
+- Completed reload, in  0.047 seconds
 desktop: 1920x1080 60Hz; virtual: 4080x1920 at -1080,0
 <RI> Initializing input.
 <RI> Input initialized.
